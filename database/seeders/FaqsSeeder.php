@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\FrequentlyAskedQuestions;
 
-class FaqSeeder extends Seeder
+class FaqsSeeder extends Seeder
 {
     public function run()
     {

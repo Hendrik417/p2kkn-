@@ -24,24 +24,38 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // proses login (default laravel)
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = Auth::user();
+
+        if ($user->hasRole('admin')) {
+            return redirect()->route('dashboard');
+        }
+
+        if ($user->hasRole('dosen')) {
+            return redirect()->route('dosen.dashboard');
+        }
+
+        if ($user->hasRole('mahasiswa')) {
+            return redirect()->route('mahasiswa.dashboard');
+        }
+
+        // fallback
+        return redirect('/');
     }
 
-    /**
-     * Destroy an authenticated session.
-     */
+
+
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

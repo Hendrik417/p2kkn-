@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-class PeriodSeeder extends Seeder
+class PeriodsSeeder extends Seeder
 {
     public function run()
     {

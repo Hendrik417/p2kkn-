@@ -4,9 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Groups;
+use Illuminate\Support\Facades\Auth; 
 
 class GroupsController extends Controller
 {
+
+    // ✅ DASHBOARD DOSEN (WAJIB untuk Blade kamu)
+    public function dashboard()
+    {
+        $groups = Groups::with('students')->get();
+
+        return view('lecturer.dashboard', [
+            'groups' => $groups,
+            'user' => Auth::user()
+        ]);
+    }
 
     // menampilkan data
     public function index()
@@ -43,7 +55,7 @@ class GroupsController extends Controller
         ]);
 
         return redirect()->route('groups.index')
-            ->with('success','Data group berhasil ditambahkan');
+            ->with('success', 'Data group berhasil ditambahkan');
     }
 
     // form edit
@@ -77,7 +89,7 @@ class GroupsController extends Controller
         ]);
 
         return redirect()->route('groups.index')
-            ->with('success','Data group berhasil diupdate');
+            ->with('success', 'Data group berhasil diupdate');
     }
 
     // hapus data
@@ -87,7 +99,6 @@ class GroupsController extends Controller
         $group->delete();
 
         return redirect()->route('groups.index')
-            ->with('success','Data group berhasil dihapus');
+            ->with('success', 'Data group berhasil dihapus');
     }
-
 }

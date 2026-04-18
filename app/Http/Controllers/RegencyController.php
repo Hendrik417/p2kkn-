@@ -28,23 +28,27 @@ class RegencyController extends Controller
                     }
                 })
                 ->addColumn('action', function ($item) {
-                    return '
-                    <a href="' . route('regency.show', $item->id) . '"
-                        class="inline-block bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-1 px-2 rounded shadow-lg">
-                        Detail
-                    </a>
-                    <a href="' . route('regency.edit', $item->id) . '"
-                        class="inline-block bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded shadow-lg">
-                        Edit
-                    </a>
-                    <form class="inline-block" action="' . route('regency.destroy', $item->id) . '" method="POST" onsubmit="return confirm(\'Yakin hapus data ini?\')">
-                        ' . csrf_field() . method_field('delete') . '
-                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 mx-3 rounded shadow-lg">
-                            Hapus
-                        </button>
-                    </form>
+                return '
+                <a href="' . route('regency.show', $item->id) . '"
+                    class="inline-block bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-1 px-2 rounded shadow-lg">
+                    Detail
+                </a>
+
+                <a href="' . route('regency.edit', $item->id) . '"
+                    class="inline-block bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded shadow-lg">
+                    Edit
+                </a>
+
+                <form class="inline-block" action="' . route('regency.destroy', $item->id) . '" method="POST"
+                    onsubmit="return confirm(\'Yakin hapus data ini?\')">
+                    ' . csrf_field() . method_field('delete') . '
+                    <button type="submit"
+                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 mx-3 rounded shadow-lg">
+                        Hapus
+                    </button>
+                </form>
                 ';
-                })
+            })
                 ->rawColumns(['is_active','action'])
                 ->make(true);
         }
@@ -62,8 +66,40 @@ class RegencyController extends Controller
 
         Regency::create($data);
 
-        return redirect()->route('regency.index')->with('success','provinsi berhasi dibuat');
+        return redirect()->route('regency.index')->with('success','kabupaten berhasil dibuat');
+    }
+        public function edit($id)
+    {
+        // dd('edit jalan');
+
+        $regency = Regency::findOrFail($id);
+        return view('regency.create', compact('regency'));
+    }
+    public function update(Request $request, $id)
+    {
+    $request->validate([
+        'regency_name' => 'required',
+        'is_active' => 'required'
+    ]);
+
+    $regency = Regency::findOrFail($id);
+
+    $regency->update([
+        'regency_name' => $request->regency_name,
+        'is_active' => $request->is_active
+    ]);
+
+    return redirect()->route('regency.index')
+        ->with('success', 'Data berhasil diupdate');
     }
 
+    public function destroy($id)
+    {
+        $regency = Regency::findOrFail($id);
+        $regency->delete();
+
+        return redirect()->route('regency.index')
+            ->with('success', 'Data berhasil dihapus');
+    }
 
 }

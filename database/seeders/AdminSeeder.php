@@ -2,11 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\class;
+use App\Models\User;
 
 class AdminSeeder extends Seeder
 {
@@ -15,12 +13,18 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('tb_admin')->insert([
-          'username' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('password123'),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        // Pastikan 'username' diisi karena database kamu membutuhkannya
+        $admin = User::updateOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name'              => 'Admin Utama',
+                'username'          => 'admin', // AKTIFKAN BARIS INI
+                'password'          => Hash::make('password123'),
+                'email_verified_at' => now(),
+            ]
+        );
+
+        // Berikan role admin
+        $admin->assignRole('admin');
     }
 }

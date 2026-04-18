@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-use App\Models\User;
 
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -16,48 +15,43 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
+        // PENTING: Bersihkan cache permission di awal
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
         // Mendefinisikan daftar permission yang akan dibuat
+
         $permissions = [
-            'view regencies',
-            'create regencies',
-            'edit regencies',
-            'view district',
-            'create district',
-            'edit district',
-            'view villages',
-            'create villages',
-            'edit villages',
+            'view users',
+            'create users',
+            'edit users',
+            'delete users',
+            'view my-devices',
+            'create my-devices',
+            'edit my-devices',
+            'delete my-devices',
         ];
 
-        // Membuat permission satu per satu
+        // Ganti bagian ini:
         foreach ($permissions as $permission) {
-        Permission::firstOrCreate([
-        'name' => $permission,
-        'guard_name' => 'web']);}
+            // Permission::create(['name' => $permission]); <-- Hapus/Komentar ini
 
-        // Membuat role 'admin'
-        $adminRole = Role::create(['name' => 'admin']);
+            // Gunakan ini:
+            Permission::firstOrCreate(['name' => $permission]);
+        }
 
-        // Memberikan permission kepada role 'teacher'
-        // $teacherRole->givePermissionTo($permissions); #1
-        $adminRole->syncPermissions($permissions);
+        // Lakukan hal yang sama untuk Role agar tidak error di kemudian hari:
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        // $userRole = Role::firstOrCreate(['name' => 'user']);
+        $lecturerRole = Role::firstOrCreate(['name' => 'lecturer']);
+        $studentRole = Role::firstOrCreate(['name' => 'student']);
 
-        // Membuat role 'student'
-        $studentRole = Role::create(['name' => 'student']);
+        $studentRole->givePermissionTo([
+            'view my-devices',
+            'create my-devices',
+            'edit my-devices',
+            'delete my-devices',
+        ]); #2
 
-        // Memberikan permission kepada role 'student'
-        // $studentRole->givePermissionTo([
-        //     'view courses',
-        // ]);
-
-        // Membuat data user superadmin
-        $user = User::create([
-            'name' => 'Super Admin',
-            'email' => 'superadmin@gmail.com',
-            'password' => bcrypt('password'),
-        ]);
-
-        // Menetapkan role 'admin' kepada user superadmin
-        $user->assignRole($adminRole);
+        ;
     }
 }
+

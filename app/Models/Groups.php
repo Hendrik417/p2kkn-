@@ -3,13 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Students;
 
 class Groups extends Model
 {
-    // nama tabel
     protected $table = 'tb_groups';
-
-    // primary key
     protected $primaryKey = 'id_groups';
 
     protected $fillable = [
@@ -20,4 +18,10 @@ class Groups extends Model
         'regency',
         'survising_lectures'
     ];
+
+    // ✅ RELASI FIX
+    public function students()
+    {
+        return $this->hasMany(Students::class, 'group_id', 'id_groups');
+    }
 }

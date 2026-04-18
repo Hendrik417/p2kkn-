@@ -6,16 +6,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Admin extends Model
 {
-    // nama tabel
-    protected $table = 'tb_admin';
+    // Nama tabel di database
+    protected $table = 'admin';
 
-    // primary key
-    protected $primaryKey = 'id_admin';
+    // Primary key sesuai gambar (id berwarna ungu)
+    protected $primaryKey = 'id';
 
-    // field yang boleh diisi
-   //protected $fillable ='email', 'password','username',;
+    /**
+     * Field yang boleh diisi (Mass Assignment)
+     * userid, password, username, dan email
+     */
+    protected $fillable = [
+        'user_id',
+        'password',
+        'username',
+        'email'
+    ];
 
-    // field yang tidak boleh diisi
-    protected $guarded =
-        'id_admin';
+    /**
+     * Field yang tidak boleh diisi secara massal
+     * Biasanya primary key 'id'
+     */
+    protected $guarded = [
+        'id'
+    ];
+
+    // Jika kamu tidak menggunakan kolom 'created_at' dan 'updated_at',
+    // tambahkan baris berikut agar tidak error:
+    // public $timestamps = false;
 }

@@ -4,43 +4,50 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class VillageSeeder extends Seeder
 {
     public function run()
     {
         $villages = [
-            // Majene
-            // district_id = 1 (Banggae)
-            ['village_name' => 'Banggae I', 'district_id' => 1],
-            ['village_name' => 'Banggae II', 'district_id' => 1],
-            ['village_name' => 'Bontomate', 'district_id' => 1],
+            // Majene - Banggae (district_id = 1)
+            ['name' => 'Banggae I', 'district_id' => 1, 'type' => 'Kelurahan'],
+            ['name' => 'Banggae II', 'district_id' => 1, 'type' => 'Kelurahan'],
+            ['name' => 'Bontomate', 'district_id' => 1, 'type' => 'Kelurahan'],
 
-            // district_id = 2 (Banggae Timur)
-            ['village_name' => 'Pappaseng', 'district_id' => 2],
-            ['village_name' => 'Kalukkang', 'district_id' => 2],
+            // Majene - Banggae Timur (district_id = 2)
+            ['name' => 'Pappaseng', 'district_id' => 2, 'type' => 'Kelurahan'],
+            ['name' => 'Kalukkang', 'district_id' => 2, 'type' => 'Kelurahan'],
 
-            // Mamasa
-            // district_id = 8 (Aralle)
-            ['village_name' => 'Aralle Tengah', 'district_id' => 8],
-            ['village_name' => 'Aralle Utara', 'district_id' => 8],
+            // Mamasa - Aralle (district_id = 8)
+            ['name' => 'Aralle Tengah', 'district_id' => 8, 'type' => 'Desa'],
+            ['name' => 'Aralle Utara', 'district_id' => 8, 'type' => 'Desa'],
 
-            // Mamuju
-            // district_id = 15 (Mamuju)
-            ['village_name' => 'Mamuju Barat', 'district_id' => 15],
-            ['village_name' => 'Mamuju Selatan', 'district_id' => 15],
+            // Mamuju - Mamuju (district_id = 15)
+            ['name' => 'Mamuju Barat', 'district_id' => 15, 'type' => 'Kelurahan'],
+            ['name' => 'Mamuju Selatan', 'district_id' => 15, 'type' => 'Kelurahan'],
 
-            // Polewali Mandar
-            // district_id = 22 (Polewali)
-            ['village_name' => 'Polewali Tengah', 'district_id' => 22],
-            ['village_name' => 'Polewali Selatan', 'district_id' => 22],
+            // Polewali Mandar - Polewali (district_id = 22)
+            ['name' => 'Polewali Tengah', 'district_id' => 22, 'type' => 'Kelurahan'],
+            ['name' => 'Polewali Selatan', 'district_id' => 22, 'type' => 'Kelurahan'],
 
-            // Pasangkayu
-            // district_id = 28 (Pasangkayu)
-            ['village_name' => 'Pasangkayu Tengah', 'district_id' => 28],
-            ['village_name' => 'Pasangkayu Utara', 'district_id' => 28],
+            // Pasangkayu - Pasangkayu (district_id = 28)
+            ['name' => 'Pasangkayu Tengah', 'district_id' => 28, 'type' => 'Kelurahan'],
+            ['name' => 'Pasangkayu Utara', 'district_id' => 28, 'type' => 'Kelurahan'],
         ];
 
-        DB::table('tb_village')->insert($villages);
+        foreach ($villages as $village) {
+            DB::table('villages')->insert([
+                'name'        => $village['name'],
+                // Slug dibuat unik dengan menggabungkan nama desa dan id kecamatan
+                'slug'        => Str::slug($village['name'] . '-' . $village['district_id']),
+                'district_id' => $village['district_id'],
+                'type'        => $village['type'],
+                'is_active'   => true,
+                'created_at'  => now(),
+                'updated_at'  => now(),
+            ]);
+        }
     }
 }

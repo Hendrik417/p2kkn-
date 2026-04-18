@@ -6,16 +6,37 @@ use Illuminate\Database\Eloquent\Model;
 
 class Students extends Model
 {
-    // nama tabel
-    protected $table = 'tb_students';
+    // Nama tabel disesuaikan dengan header gambar
+    protected $table = 'students';
 
-    // primary key
-    protected $primaryKey = 'id_students';
+    // Primary key adalah 'id' (kotak berwarna ungu)
+    protected $primaryKey = 'id';
 
-    // field yang boleh diisi
-   //protected $fillable ='email', 'password','username','groups','faculties','bacth','status','locations';
+    /**
+     * Field yang boleh diisi (Mass Assignment)
+     * Ditambahkan 'userid', 'name', dan diperbaiki penulisan 'batch'
+     */
+    protected $fillable = [
+        'user_id',
+        'email',
+        'password',
+        'username',
+        'name',
+        'groups',
+        'faculties',
+        'batch',
+        'status'
+    ];
 
-    // field yang tidak boleh diisi
-    protected $guarded =
-        'id_student';
+    /**
+     * Field yang tidak boleh diisi secara massal
+     * Biasanya primary key 'id'
+     */
+    protected $guarded = [
+        'id'
+    ];
+
+    // Jika di tabel database tidak ada kolom created_at dan updated_at,
+    // aktifkan baris di bawah ini:
+    // public $timestamps = false;
 }

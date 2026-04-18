@@ -6,16 +6,35 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lecturer extends Model
 {
-    // nama tabel
-    protected $table = 'tb_lecturer';
+    // Nama tabel disesuaikan dengan header gambar
+    protected $table = 'lecturer';
 
-    // primary key
-    protected $primaryKey = 'id_lecturer';
+    // Primary key (blok ungu di gambar tertulis 'id')
+    protected $primaryKey = 'id';
 
-    // field yang boleh diisi
-   //protected $fillable ='email', 'password','username','groups','faculties','study_programs','number_of_groups','locations';
+    /**
+     * Field yang boleh diisi (Mass Assignment)
+     * Disesuaikan dengan urutan dan nama di gambar
+     */
+    protected $fillable = [
+        'user_id',
+        'email',
+        'password',
+        'username',
+        'name',
+        'faculties',
+        'study_program', // Sesuai gambar: tanpa 's'
+        'number_of_groups',
+        'location' // Berdasarkan "1 more" atau field tambahan umum
+    ];
 
-    // field yang tidak boleh diisi
-    protected $guarded =
-        'id_lecturer';
+    /**
+     * Field yang diproteksi
+     */
+    protected $guarded = [
+        'id'
+    ];
+
+    // Aktifkan ini jika tabel tidak memiliki kolom created_at & updated_at
+    // public $timestamps = false;
 }

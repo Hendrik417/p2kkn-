@@ -73,7 +73,7 @@ class StudentsController extends Controller
         Students::create($data);
 
         return redirect()
-            ->route('student.index')
+            ->route('student')
             ->with('success','Student berhasil dibuat');
     }
 
@@ -112,7 +112,7 @@ class StudentsController extends Controller
         $student->update($data);
 
         return redirect()
-            ->route('students.index')
+            ->route('students')
             ->with('success','Student berhasil diupdate');
     }
 
@@ -125,7 +125,7 @@ class StudentsController extends Controller
         $student->delete();
 
         return redirect()
-            ->route('student.index')
+            ->route('student')
             ->with('success','Student berhasil dihapus');
     }
 

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('slug')->unique();
             $table->foreignId('regency_id')
-              ->constrained('tb_regency') // Menentukan nama tabel induk secara eksplisit
+              ->constrained('tb_regency') 
               ->onDelete('cascade');
             $table->enum('type', ['Kecamatan']);
             $table->json('geojson')->nullable();

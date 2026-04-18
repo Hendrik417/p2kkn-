@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
@@ -147,7 +147,92 @@
 
         {{-- @include('layouts.navigation') --}}
 
-        <!-- Page Heading -->
+<!-- Page Heading -->
+
+</html>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>SIM P2KKN UNSULBAR</title>
+
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet">
+
+    {{-- Slot untuk CSS tambahan dari halaman anak --}}
+    {{ $style ?? '' }}
+
+    <style>
+        /* Custom scrollbar for sidebar */
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.35);
+            border-radius: 10px;
+        }
+
+        .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* DataTables Styling */
+        .dataTables_wrapper select,
+        .dataTables_wrapper .dataTables_filter input {
+            color: #4a5568;
+            padding: .5rem 1rem;
+            line-height: 1.25;
+            border-width: 2px;
+            border-radius: .25rem;
+            border-color: #edf2f7;
+            background-color: #edf2f7;
+        }
+
+        table.dataTable.hover tbody tr:hover {
+            background-color: #ebf4ff;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            color: #fff !important;
+            background: #667eea !important;
+            border: 1px solid transparent;
+            font-weight: 700;
+            border-radius: .25rem;
+        }
+    </style>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+</head>
+
+<body class="font-sans antialiased">
+    <div class="min-h-screen bg-gray-100">
+        @include('layouts.header')
+        @include('layouts.breadcrumb')
+
+        {{--
+           PENTING: Jangan masukkan @include sidebar/header di sini
+           jika file tersebut juga memanggil <x-layout.app>.
+           Biarkan halaman anak yang mengatur strukturnya.
+        --}}
+
         @isset($header)
             <header class="bg-white shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -156,17 +241,21 @@
             </header>
         @endisset
 
-        <!-- Page Content -->
         <main>
-            {{ $slot }}
+            {{ $slot ?? '' }}
         </main>
     </div>
-    <!-- Alpine.js for sidebar toggle -->
+
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
-        lucide.createIcons();
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
     </script>
+
+
+    {{-- Slot untuk JS tambahan --}}
     {{ $script ?? '' }}
 </body>
 

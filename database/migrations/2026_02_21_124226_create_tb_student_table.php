@@ -11,18 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-     Schema::create('tb_students', function (Blueprint $table) {
-        $table->bigIncrements('id_students');
-        $table->string('name');
-        $table->string('nim')->unique();
-        $table->string('email')->unique();
-        $table->string('groups')->nullable();
-        $table->string('faculties')->nullable();
-        $table->string('batch')->nullable();
-        $table->string('status')->nullable();
-        $table->string('locations')->nullable();
-        $table->timestamps();
-});
+        // Nama tabel diubah menjadi 'students' sesuai $table di Model
+        Schema::create('students', function (Blueprint $table) {
+            $table->id(); // Primary key (id) sesuai $primaryKey di Model
+
+            // Field yang didefinisikan di $fillable Model:
+            $table->string('user_id')->unique(); // ID unik user (misal: NIM atau ID sistem)
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('username')->unique();
+            $table->string('name');
+            $table->string('groups')->nullable();
+            $table->string('faculties')->nullable();
+            $table->integer('batch'); // Tahun angkatan
+            $table->string('status')->default('active'); // Status mahasiswa
+
+            $table->timestamps(); // create_at & updated_at
+        });
     }
 
     /**
@@ -30,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tb_student');
+        Schema::dropIfExists('students');
     }
 };

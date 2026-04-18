@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreStudentRequest extends FormRequest
+class StudentStoreRequest extends FormRequest
 {
     /**
      * menentukan apakah request boleh dijalankan

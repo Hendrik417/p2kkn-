@@ -58,12 +58,18 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('regency.store') }}" method="post" enctype="multipart/form-data"
-                        class="bg-white p-6 rounded-lg shadow-md">
+
+                        <form action="{{ isset($regency) ? route('regency.update', $regency->id) : route('regency.store') }}" method="POST">
                         @csrf
 
+
+
+                        @if(isset($regency))
+                            @method('PUT')
+                        @endif
+
                         <div class="mb-4">
-                            <label class="block text-gray-700 font-bold mb-2">Provinsi</label>
+                            <label class="block text-gray-700 font-bold mb-2">Kabupaten</label>
                             <input type="text" name="regency_name" value="{{ old('regency_name') }}"
                                 class="block w-full bg-gray-100 text-gray-700 border border-gray-300 rounded-lg py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500">
                         </div>

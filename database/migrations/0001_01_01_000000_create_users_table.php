@@ -11,22 +11,29 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // 1. Tabel Users
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('username')->unique();
+            $table->string('nim', 20)->unique(); // Kolom Tambahan
+            // $table->string('prodi');            // Kolom Tambahan
+            // $table->integer('angkatan');        // Kolom Tambahan
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
 
+        // 2. Tabel Password Reset (WAJIB ADA)
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
 
+        // 3. Tabel Sessions (PENTING: Penyebab Error 500 kamu tadi)
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();

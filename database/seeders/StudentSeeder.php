@@ -3,50 +3,40 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class StudentSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
-        DB::table('tb_students')->insert([
+        $students = [
             [
-                'name' => 'Ahmad Fauzan',
-                'nim' => '2022001',
-                'email' => 'ahmadfauzan@example.com',
-                'groups' => 'A',
-                'faculties' => 'Teknik',
-                'batch' => '2022',
-                'status' => 'Aktif',
-                'locations' => 'Majene',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'name'     => 'Ahmad Fauzan',
+                'email'    => 'ahmadfauzan@example.com',
+                'username' => '2022001', // TAMBAHKAN INI (Gunakan NIM sebagai username)
+                'password' => Hash::make('password'),
             ],
             [
-                'name' => 'Siti Rahma',
-                'nim' => '2022002',
-                'email' => 'sitirahma@example.com',
-                'groups' => 'B',
-                'faculties' => 'Ekonomi',
-                'batch' => '2022',
-                'status' => 'Aktif',
-                'locations' => 'Polewali',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'name'     => 'Siti Rahma',
+                'email'    => 'sitirahma@example.com',
+                'username' => '2022002', // TAMBAHKAN INI
+                'password' => Hash::make('password'),
             ],
-            [
-                'name' => 'Muhammad Ilham',
-                'nim' => '2021003',
-                'email' => 'ilham@example.com',
-                'groups' => 'A',
-                'faculties' => 'Pertanian',
-                'batch' => '2021',
-                'status' => 'Nonaktif',
-                'locations' => 'Mamuju',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        ];
+
+        foreach ($students as $data) {
+            $user = User::updateOrCreate(
+                ['email' => $data['email']],
+                $data
+            );
+
+            if (method_exists($user, 'assignRole')) {
+                $user->assignRole('student');
+            }
+        }
     }
 }
