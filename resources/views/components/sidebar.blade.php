@@ -78,21 +78,21 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('regency.index') }}"
+                <a href="{{ route('admin.regency.index') }}"
                     class="flex items-center px-4 py-3 text-sm font-medium rounded-lg hover:text-indigo-600 hover:bg-gray-50 transition group">
                     <i data-lucide="layout-grid" class="w-4 h-4 mr-3 text-gray-400 group-hover:text-indigo-600"></i>
                     Kabupaten
                 </a>
             </li>
             <li>
-                <a href="{{ route('district.index') }}"
+                <a href="{{ route('admin.district.index') }}"
                     class="flex items-center px-4 py-3 text-sm font-medium rounded-lg hover:text-indigo-600 hover:bg-gray-50 transition group">
                     <i data-lucide="layout-grid" class="w-4 h-4 mr-3 text-gray-400 group-hover:text-indigo-600"></i>
                     Kecamatan
                 </a>
             </li>
             <li>
-                <a href="{{ route('village.index') }}"
+                <a href="{{ route('admin.village.index') }}"
                     class="flex items-center px-4 py-3 text-sm font-medium rounded-lg hover:text-indigo-600 hover:bg-gray-50 transition group">
                     <i data-lucide="layout-grid" class="w-4 h-4 mr-3 text-gray-400 group-hover:text-indigo-600"></i>
                     Desa

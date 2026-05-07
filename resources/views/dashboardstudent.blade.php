@@ -20,7 +20,7 @@
             <nav class="flex-1 px-4">
                 <div class="mb-6">
                     <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-2 px-2">Menu</p>
-                    <a href="{{ route('student.dashboard') }}"
+                    <a href="{{ route('student.dashboard') }}" 
                         class="flex items-center gap-3 px-3 py-2 {{ request()->routeIs('student.dashboard') ? 'bg-indigo-50 text-indigo-600' : 'text-gray-500' }} rounded-lg font-medium shadow-sm transition">
                         <i class="ph ph-house text-lg"></i> Beranda
                     </a>
